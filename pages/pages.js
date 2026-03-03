@@ -4,5 +4,5 @@ registerLazyVuePage(PageTest, () => import('./test.vue'));
 function registerLazyVuePage(opts, loader)
 {
 	console.log(opts)
-	loader();
+	console.log(loader().default);
 }

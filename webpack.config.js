@@ -36,7 +36,6 @@ export default function(env, argv) {
 								["@babel/preset-env", {
 										"targets": "defaults",
 
-										// polyfills
 										"useBuiltIns": "usage",
 										"corejs": "3.47",
 										
