@@ -4,6 +4,7 @@ import path from 'path'
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import webpack from 'webpack';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -29,25 +30,30 @@ export default function(env, argv) {
 					test: /\.js$/,
 					exclude: /node_modules/,
 					use:
-					{ 
-						loader: "babel-loader",
-						options: {
-							presets: [
-								["@babel/preset-env", {
-										"targets": "defaults",
+					[
+						{
+							loader: 'webpack-import-splitter-loader'
+						},
+						{ 
+							loader: "babel-loader",
+							options: {
+								presets: [
+									["@babel/preset-env", {
+											"targets": "defaults",
 
-										"useBuiltIns": "usage",
-										"corejs": "3.47",
-										
-										// https://stackoverflow.com/questions/59111587/why-is-webpack-not-generating-chunks-from-my-dynamic-imports
-										exclude: ['proposal-dynamic-import']	
-									}
+											"useBuiltIns": "usage",
+											"corejs": "3.47",
+											
+											// https://stackoverflow.com/questions/59111587/why-is-webpack-not-generating-chunks-from-my-dynamic-imports
+											exclude: ['proposal-dynamic-import']	
+										}
+									]
+								],
+								plugins: [
 								]
-							],
-							plugins: [
-							]
+							}
 						}
-					}
+					]
 				},
 				{
 					test: /\.vue$/,
@@ -69,9 +75,15 @@ export default function(env, argv) {
 				inject: 'body',
 			}),
 			new VueLoaderPlugin(),
-			new BundleAnalyzerPlugin({
-				analyzerMode: 'server'
-			})
+			new webpack.experiments.schemes.VirtualUrlPlugin(
+				{
+					'__unused__': ''
+				},
+				'webpack-import-splitter-loader'
+			),
+			// new BundleAnalyzerPlugin({
+			// 	analyzerMode: 'server'
+			// })
 		]
 	};
 };
