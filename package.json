@@ -24,7 +24,7 @@
     "babel-loader": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
     "vue-loader": "^17.4.2",
-    "webpack": "^5.104.1",
+    "webpack": "github:webpack/webpack#claude/issue-20537-investigation-noT6J",
     "webpack-bundle-analyzer": "^5.1.0",
     "webpack-cli": "^6.0.1"
   }
