@@ -72,6 +72,9 @@ export default function(env, argv) {
 			new BundleAnalyzerPlugin({
 				analyzerMode: 'server'
 			})
-		]
+		],
+		experiments: {
+			moduleSplitting: true
+		}
 	};
 };
